@@ -1,0 +1,17 @@
+project -- cs 330 mid term 
+frondent section 
+topic -- anime search page --
+
+idea page that alow user search Anime info by key name
+
+info from search key base on key and search type
+
+apis:
+To save and create anime watch list
+- https://rapidapi.com/mikilior1/api/Anilist/details
+
+for search and lookup anime/manga info
+- https://rapidapi.com/theapiguy/api/jikan1
+- https://rapidapi.com/community/api/manga-eden/
+
+search type: Anime/Manga info - Name - author - espisodes/chapter - date realease - rate
