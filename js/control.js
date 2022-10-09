@@ -9,7 +9,8 @@
 //api -- https://rapidapi.com/theapiguy/api/jikan1/
 // 'X-RapidAPI-Key': 'c7bdf33b7dmshcf42308cd22add9p16fdb8jsnf56785f70313',
 // 'X-RapidAPI-Host': 'jikan1.p.rapidapi.com'
-
+// 
+//populate the info and choice for 
 const options = {
 	method: 'GET',
 	headers: {
