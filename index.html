@@ -1,22 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comuc Search website</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comic Search website</title>
+    <link
+      rel="stylesheet"
+      href="css/bootstrap.min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
     <div>
-        <h1>TITLE</h1>
+      <h1 class="d-flex justify-content-center">MANGA/ANIME SEARCH n STORE</h1>
     </div>
-    <div id="searching"></div>
-    <div id="actions"></div>
-    <div id="content"></div>
+    <!-- 3 main items on screen -->
+    <div id="frst-row" class="container">
+      <div class="row">
+        <!-- SUGGESTION LIST -->
+        <div id="suggestions" class="col-4 float-none">
+          <table id="suggest-table" class="table">
+            <thead>
+              <tr>
+                <th scope="col">Suggestions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Placeholder</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br />
+        <!-- SEARCH ENGINE -->
+        <div id="search-engine" class="col-4 float-none">
+          <label for="title" class="d-flex justify-content-center"
+            >Enter a title</label
+          >
+          <input
+            type="text"
+            id="title"
+            placeholder="Enter a title"
+            class="d-flex justify-content-center"
+          />
+          <div id="buttons" class="d-flex justify-content-center">
+            <input
+              type="button"
+              id="AnimeSearch"
+              onclick="AnimeSearch()"
+              value="Search Anime"
+              class="d-flex justify-content-start"
+            />
+            <input
+              type="button"
+              id="MangaSearch"
+              onclick="MangaSearch()"
+              value="Search Manga"
+              class="d-flex justify-content-end"
+            />
+          </div>
+        </div>
+        <br />
+        <!-- WATCHLIST -->
+        <div id="watch-list" class="col-4 float-none">
+          <table id="watch-table" class="table">
+            <thead>
+              <tr>
+                <th scope="col">Watchlist</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Placeholder</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- RESULT TABLE -->
+    <div id="result">
+      <table id="result-table" class="table">
+        <thead>
+          <tr>
+            <th scope="col">Placeholder</th>
+            <th scope="col">Placeholder</th>
+            <th scope="col">Placeholder</th>
+            <th scope="col">Placeholder</th>
+            <th scope="col">Placeholder</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-link"
+                data-toggle="modal"
+                data-target="#myModal"
+              >
+                More Info
+              </button>
+            </td>
+            <td>Placeholder</td>
+          </tr>
+          <tr>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-link"
+                data-toggle="modal"
+                data-target="#myModal"
+              >
+                More Info
+              </button>
+            </td>
+            <td>Placeholder</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- MODAL -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div
+            id="content-detail"
+            class="modal-body d-inline-flex justify-content-center"
+          >
+            <p>Story details go here. Maybe with a div with stuff</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/script.js"></script>
-</body>
+    <script type="text/javascript" src="js/model.js"></script>
+    <script type="text/javascript" src="js/view.js"></script>
+    <script type="text/javascript" src="js/controller.js"></script>
+  </body>
 </html>
