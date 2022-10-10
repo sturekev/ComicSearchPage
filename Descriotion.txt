@@ -53,3 +53,8 @@ fetch('https://hummingbirdv1.p.rapidapi.com/anime/steins-gate', options)
 //
 
 search type: Anime/Manga info - Name - author - espisodes/chapter - date realease - rate
+
+
+task:
+Hỷ : --  làm xong format và styling bằng bootstrap cho html và cài các id cho các mục quan trọng -- dựa trên mẫu đã vẽ (7:00pm 10/9/2022)
+Phát: làm xong phần model và làm tiếp phần controll deadline (12:00pm 10/9/2022)
