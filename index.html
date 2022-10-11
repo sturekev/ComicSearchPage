@@ -39,14 +39,14 @@
                     <input
                       type="button"
                       id="AnimeTop"
-                      onclick="AnimeTop()"
+                      onclick="getTop('Anime')"
                       value="Top Anime"
                       class="d-flex justify-content-start"
                     />
                     <input
                       type="button"
                       id="MangaTop"
-                      onclick="MangaTop()"
+                      onclick="getTop('Manga')"
                       value="Top Manga"
                       class="d-flex justify-content-end"
                     />
@@ -99,11 +99,7 @@
                 <th scope="col">Watchlist</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Placeholder</td>
-              </tr>
-            </tbody>
+            <tbody id="watchList"></tbody>
           </table>
         </div>
       </div>

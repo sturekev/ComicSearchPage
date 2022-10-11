@@ -15,7 +15,7 @@
 // call model
 var animeModel = new allAnime();
 var mangaModel = new allManga();
-
+var pageViews = new pageView();
 // api Jikan 
 const jikanApi = {
 	method: 'GET',
@@ -34,6 +34,10 @@ async function populateSugestion(type){
 	.then(response => response.json())
 	.then(response => console.log(response))
 	.catch(err => console.error(err));
+}
+
+function watchList (model){
+	
 }
 
 window.onload = function(){
