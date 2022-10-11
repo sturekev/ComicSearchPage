@@ -248,3 +248,11 @@ class allManga extends Subject{
         return{ next: () => ({value: this._allManga[++index], done : !(index in this._allManga)})};
     }
 }
+
+class Search extends Subject{
+    constructor(){
+        super();
+        this._search = []
+    }
+    
+}
