@@ -16,6 +16,7 @@
 var animeModel = new allAnime();
 var mangaModel = new allManga();
 var pageViews = new pageView();
+var searchModel = new Search();
 // api Jikan 
 const jikanApi = {
 	method: 'GET',
@@ -24,18 +25,33 @@ const jikanApi = {
 		'X-RapidAPI-Host': 'jikan1.p.rapidapi.com'
 	}
 };
-data  = await fetch('https://jikan1.p.rapidapi.com/top/anime/1/upcoming', jikanApi)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
 //
 async function populateSugestion(type){
-	topAnime  = await fetch(`https://jikan1.p.rapidapi.com/top/${type}`, jikanApi)
+	top  = await fetch(`https://jikan1.p.rapidapi.com/top/${type}`, jikanApi)
 	.then(response => response.json())
 	.then(response => console.log(response))
 	.catch(err => console.error(err));
 }
 
+function saveWatchList (){
+	localStorage.setItem("local_AnimeWatchList",JSON.stringify(animeModel));
+	localStorage.setItem("local_MangaWatchList",JSON.stringify(mangaModel));
+}
+var deletePlayerIdList = [];
+function clearWatchList (){ 
+    let cbList = document.querySelectorAll("#watch-table > tbody > tr > td > input[type = 'checkbox']");
+    for (let checkbox of cbList){
+        if (checkbox.checked){
+            deletePlayerIdList.push(parseInt(checkbox.closest('tr')['id']));
+        }
+    }
+    searchModel.removeSearch(deletePlayerIdList);
+}
+
+function RemoveAll(){
+	animeModel.RemoveAll()
+	mangaModel.RemoveAll()
+}
 function watchList (model){
 	
 }
