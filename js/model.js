@@ -204,7 +204,7 @@ class allAnime extends Subject{
         this._allAnime.push(animeInfo);
         this.publish("newAnime has been added", this);
     }
-    removeManga(trIds){
+    removeAnime(trIds){
         for (let index = trIds.length; index > 0, index --;){
             this._allAnime.splice(trIds[index],1);
         }
@@ -246,5 +246,33 @@ class allManga extends Subject{
     [Symbol.iterator](){
         let index = -1;
         return{ next: () => ({value: this._allManga[++index], done : !(index in this._allManga)})};
+    }
+}
+
+class Search extends Subject{
+    constructor(){
+        super();
+        this._search = []
+    }
+    addSearch(searchInfo){
+        this._search.push(searchInfo);
+        this.publish("New Manga has been added", this);
+    }
+
+    removeSearch(trIds){
+        for (let index = trIds.length; index > 0, index --;){
+            this._search.splice(trIds[index],1);
+        }
+        this.publish("Selected search has been deleted", this);
+    }
+
+    removeAll (){
+        this._search = [];
+        this.publish("The search local storage has been cleared", this);
+    }
+
+    [Symbol.iterator](){
+        let index = -1;
+        return{ next: () => ({value: this._search[++index], done : !(index in this._allManga)})};
     }
 }
