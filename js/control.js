@@ -26,37 +26,30 @@ var searchModel = new Search();
 //   },
 // };
 //
-const anime_search_options = {
-  method: "GET",
-  headers: {
-    "X-RapidAPI-Key": "7574f18f9bmsh34870144cdb7a1bp1b4b3cjsn22321cb8f492",
-    "X-RapidAPI-Host": "myanimelist.p.rapidapi.com",
-  },
-};
-
-const manga_search_options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'c7bdf33b7dmshcf42308cd22add9p16fdb8jsnf56785f70313',
-		'X-RapidAPI-Host': 'community-manga-eden.p.rapidapi.com'
-	}
-};
-
 async function populateSugestion(type) {
   top = await fetch(`https://api.jikan.moe/v4/top/${type}`)
     .then((response) => response.json())
     .then((response) => {
-      console.log(response);
+      // console.log(response['data'][0]['title']);
       let table = document.querySelector("#suggest-table > tbody");
       table.innerHTML = "";
       for (let i = 0; i < 5; i++) {
         let titl = response["data"][i]["title"];
         let linkUrl;
+<<<<<<< HEAD
         if (type == "anime")
           {linkUrl = response["data"][i]["trailer"]["url"];}
         else
           {linkUrl = response["data"][i]["url"];}
         
+=======
+        if (type == "anime") {
+          linkUrl = response["data"][i]["trailer"]["url"];
+        } else {
+          linkUrl = response["data"][i]["url"];
+        }
+
+>>>>>>> fe8c8ce (rebase)
         console.log(linkUrl);
         let row = document.createElement("tr");
         let title_number = document.createElement("td");
@@ -64,6 +57,7 @@ async function populateSugestion(type) {
 
         let title_data = document.createElement("td");
         title_data.innerHTML = titl.toString();
+<<<<<<< HEAD
         let trailer_Url = document.createElement('td');
         if (linkUrl){
           let link = document.createElement('a');
@@ -74,6 +68,18 @@ async function populateSugestion(type) {
         else{trailer_Url.innerText = "N/A";}
             
         
+=======
+        let trailer_Url = document.createElement("td");
+        if (linkUrl) {
+          let link = document.createElement("a");
+          link.setAttribute("href", `${linkUrl}`);
+          link.innerText = "About";
+          trailer_Url.appendChild(link);
+        } else {
+          trailer_Url.innerText = "N/A";
+        }
+
+>>>>>>> fe8c8ce (rebase)
         row.appendChild(title_number);
         row.appendChild(title_data);
         row.appendChild(trailer_Url);
@@ -81,7 +87,11 @@ async function populateSugestion(type) {
         }
     })
     .catch((err) => console.error(err));
+<<<<<<< HEAD
 	console.log(top);
+=======
+  console.log(top);
+>>>>>>> fe8c8ce (rebase)
 }
 
 function saveWatchList() {
@@ -107,35 +117,5 @@ function RemoveAll() {
   mangaModel.RemoveAll();
 }
 function watchList(model) {}
-
-async function AnimeSearch() {
-  let search_param = document.querySelector("#title").value;
-  if (search_param == "") {
-    console.log("HERRRREEEEE");
-  } else {
-    let search_res = await fetch(
-      `https://myanimelist.p.rapidapi.com/search/${search_param}/10`,
-      anime_search_options
-    )
-      .then((response) => response.json())
-      .then((response) => console.log(response))
-      .catch((err) => console.error(err));
-  }
-}
-
-async function MangaSearch(){
-  let search_param = document.querySelector("#title").value;
-  if (search_param == "") {
-    console.log("HERRRREEEEE");
-  } else {
-    let search_res = await fetch(
-      'https://community-manga-eden.p.rapidapi.com/list/0',
-      manga_search_options
-    )
-      .then((response) => response.json())
-      .then((response) => console.log(response))
-      .catch((err) => console.error(err));
-  }
-}
 
 window.onload = function () {};
