@@ -13,11 +13,6 @@
 //populate the info and choice for
 
 // call model
-var animeModel = new allAnime();
-var mangaModel = new allManga();
-var pageViews = new pageView();
-var searchModel = new Search();
-
 // anime search constant variable
 const anime_search_options = {
   method: "GET",
@@ -107,6 +102,7 @@ function watchList(model) {}
 //anime search function
 async function AnimeSearch() {
   let search_param = document.querySelector("#title").value;
+  console.log(search_param);
   if (search_param == "") {
     console.log("HERRRREEEEE");
   } else {
@@ -115,7 +111,12 @@ async function AnimeSearch() {
       anime_search_options
     )
       .then((response) => response.json())
-      .then((response) => console.log(response))
+      .then((response) => {
+        // xử lý thông tin //
+        for (let index = 0; index <=  Object.keys(response).length; index++){
+        }
+
+      })
       .catch((err) => console.error(err));
   }
 }
