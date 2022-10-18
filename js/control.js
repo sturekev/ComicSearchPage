@@ -47,14 +47,16 @@ async function populateSugestion(type) {
         } else {
           linkUrl = response["data"][i]["url"];
         }
-
-        console.log(linkUrl);
         let row = document.createElement("tr");
+
         let title_number = document.createElement("td");
         title_number.innerHTML = `<b>${(i + 1).toString()}</b>`;
+        row.appendChild(title_number);
 
         let title_data = document.createElement("td");
         title_data.innerHTML = titl.toString();
+        row.appendChild(title_data);
+
         let trailer_Url = document.createElement("td");
         if (linkUrl) {
           let link = document.createElement("a");
@@ -64,44 +66,44 @@ async function populateSugestion(type) {
         } else {
           trailer_Url.innerText = "N/A";
         }
-
-        row.appendChild(title_number);
-        row.appendChild(title_data);
         row.appendChild(trailer_Url);
+
+        let moreInfoTd = document.createElement('td');
+        let moreInfo = document.createElement('button');
+        moreInfo.setAttribute('type','button');
+        moreInfo.setAttribute('onclick',`callSearch(${type},${titl.toString()})`);
+        moreInfo.innerText = 'More info';
+        moreInfoTd.appendChild(moreInfo);
+        row.appendChild(moreInfoTd);
+        
         table.appendChild(row);
       }
     })
     .catch((err) => console.error(err));
-  console.log(top);
 }
 
-function saveWatchList() {
-  localStorage.setItem("local_AnimeWatchList", JSON.stringify(animeModel));
-  localStorage.setItem("local_MangaWatchList", JSON.stringify(mangaModel));
-}
-
-var deletePlayerIdList = [];
-function clearWatchList() {
-  let cbList = document.querySelectorAll(
-    "#watch-table > tbody > tr > td > input[type = 'checkbox']"
-  );
-  for (let checkbox of cbList) {
-    if (checkbox.checked) {
-      deletePlayerIdList.push(parseInt(checkbox.closest("tr")["id"]));
+function callSearch(type, parram) {
+  if (type == 'anime'){
+    if (parram){
+      AnimeSearch(parram);
+    }else {
+      let search_param = document.querySelector("#title").value;
+      AnimeSearch(search_param);
     }
   }
-  searchModel.removeSearch(deletePlayerIdList);
+  else {
+    if (parram){
+      MangaSearch(parram);
+    }else {
+      let search_param = document.querySelector("#title").value;
+      MangaSearch(search_param);
+    }
+  }
 }
-
-function RemoveAll() {
-  animeModel.RemoveAll();
-  mangaModel.RemoveAll();
-}
-function watchList(model) {}
 
 //anime search function
-async function AnimeSearch() {
-  let search_param = document.querySelector("#title").value;
+async function AnimeSearch(search_param) {
+  
   console.log(search_param);
   if (search_param == "") {
     console.log("HERRRREEEEE");
@@ -122,8 +124,7 @@ async function AnimeSearch() {
 }
 
 //manga search function
-async function MangaSearch() {
-  let search_param = document.querySelector("#title").value;
+async function MangaSearch(search_param) {
   if (search_param == "") {
     console.log("HERRRREEEEE");
   } else {
@@ -137,4 +138,24 @@ async function MangaSearch() {
   }
 }
 
+// function saveWatchList() {
+// }
+// var deletePlayerIdList = [];
+// function clearWatchList() {
+//   let cbList = document.querySelectorAll(
+//     "#watch-table > tbody > tr > td > input[type = 'checkbox']"
+//   );
+//   for (let checkbox of cbList) {
+//     if (checkbox.checked) {
+//       deletePlayerIdList.push(parseInt(checkbox.closest("tr")["id"]));
+//     }
+//   }
+//   searchModel.removeSearch(deletePlayerIdList);
+// }
+
+// function RemoveAll() {
+//   animeModel.RemoveAll();
+//   mangaModel.RemoveAll();
+// }
+// function watchList(model) {}
 window.onload = function () {};
