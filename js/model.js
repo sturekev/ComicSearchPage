@@ -2,6 +2,7 @@
 
 // class cho từng anime 
 
+// title, imgUrl, description, url
 class Anime {
     constructor(Name, Status, urlLink, Title, AlternateTitle, episodeCount, coverImg, Description, Type, Genres) {
         this._animeName = Name;
@@ -87,6 +88,7 @@ class Anime {
     }
 }
 
+// title, latestChapter, thumbnail, viewsCount, url, lastestUpdtae
 class Manga {
     constructor(name, artist,author, categories, chapterLen,created, description, img, language, lastChapterDate ){
         this._mangaName = name;
