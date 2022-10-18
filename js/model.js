@@ -4,38 +4,11 @@
 
 // title, imgUrl, description, url
 class Anime {
-    constructor(Name, Status, urlLink, Title, AlternateTitle, episodeCount, coverImg, Description, Type, Genres) {
-        this._animeName = Name;
-        this._animeStatus = Status;
-        this._animeUrl = urlLink;
-        this._animeTitle = Title;
-        this._animeAlterTitle = AlternateTitle;
-        this._animeEpisode = episodeCount;
-        this._animeCoverImg = coverImg;
-        this._animeDescript = Description;
-        this._animeType = Type;
-        this._animeGenres = Genres;
-    }
-
-    get animeName (){
-        return this._animeName;
-    }
-    set animeName(newName){
-        this._animeName = newName;
-    }
-
-    get animeStatus (){
-        return this._animeStatus;
-    }
-    set animeStatus(newStatus){
-        this._animeStatus = newStatus;
-    }
-
-    get animeUrl (){
-        return this._animeUrl;
-    }
-    set animeUrl(newUrl){
-        this._animeUrl = newUrl;
+    constructor(title, imgUrl, description, url) {
+        this._animeTitle = title;
+        this._animeImgUrl = imgUrl;
+        this._animeDescription = description;
+        this._animeUrl = url;
     }
 
     get animeTitle (){
@@ -45,62 +18,37 @@ class Anime {
         this._animeTitle = newTitle;
     }
 
-    get alterTitle (){
-        return this._animeAlterTitle;
+    get animeImgUrl (){
+        return this._animeImgUrl;
     }
-    set alterTitle(newAlterTitle){
-        this._animeAlterTitle = newAlterTitle;
-    }
-
-    get animeEpisode (){
-        return this._animeEpisode;
-    }
-    set animeEpisode(newEpisode){
-        this._animeEpisode = newEpisode;
-    }
-
-    get animeCoverImg (){
-        return this._animeCoverImg;
-    }
-    set animeCoverImg(newImg){
-        this._animeCoverImg = newImg;
+    set animeImgUrl(newImgUrl){
+        this._animeImgUrl = newImgUrl;
     }
 
     get animeDescription (){
-        return this._animeDescript;
+        return this._animeDescription;
     }
     set animeDescription(newDescrpition){
-        this._animeDescript = newDescrpition;
+        this._animeDescription = newDescrpition;
     }
 
-    get animeType (){
-        return this._animeType;
+    get animeUrl (){
+        return this._animeUrl;
     }
-    set animeType(newType){
-        this._animeType = newType;
-    }
-
-    get animeGenres(){
-        return this._animeGenres;
-    }
-    set animeGenres(newGenres){
-        this._animeGenres = newGenres;
+    set animeUrl(newUrl){
+        this._animeUrl = newUrl;
     }
 }
 
 // title, latestChapter, thumbnail, viewsCount, url, lastestUpdtae
 class Manga {
-    constructor(name, artist,author, categories, chapterLen,created, description, img, language, lastChapterDate ){
-        this._mangaName = name;
-        this._mangaArtist = artist;
-        this._mangaAuthor = author;
-        this._mangaCategories = categories;
-        this._mangaChapterLen  = chapterLen;
-        this._mangaCreated = created;
-        this._mangaDescription  = description;
-        this._mangaImg = img;
-        this._mangaLang = language;
-        this._mangaLastRealease = lastChapterDate;
+    constructor(title, lastChapter, thumbnail, viewCount, url, lastestUpdate){
+        this._mangaTitle = title;
+        this._mangaChapter = lastChapter;
+        this._mangaImg = thumbnail;
+        this._views = viewCount;
+        this._mangaUrl = url;
+        this._mangaLatestUpdate  = lastestUpdate;
     }
     
     get mangaName (){
