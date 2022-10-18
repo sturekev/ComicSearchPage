@@ -39,14 +39,14 @@
                     <input
                       type="button"
                       id="AnimeTop"
-                      onclick="getTop('Anime')"
+                      onclick="populateSugestion('anime')"
                       value="Top Anime"
                       class="d-flex justify-content-start"
                     />
                     <input
                       type="button"
                       id="MangaTop"
-                      onclick="getTop('Manga')"
+                      onclick="populateSugestion('manga')"
                       value="Top Manga"
                       class="d-flex justify-content-end"
                     />
@@ -176,10 +176,9 @@
         </div>
       </div>
     </div>
-
     <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/model.js"></script>
-    <script type="text/javascript" src="js/view.js"></script>
-    <script type="text/javascript" src="js/controller.js"></script>
+    <script type="text/javascript" src="js/views.js"></script>
+    <script type="text/javascript" src="js/control.js"></script>
   </body>
 </html>
