@@ -6,55 +6,13 @@ idea page that alow user search Anime info by key name
 
 info from search key base on key and search type
 
-for search and lookup anime/manga info
-- https://rapidapi.com/theapiguy/api/jikan1
-    const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'c7bdf33b7dmshcf42308cd22add9p16fdb8jsnf56785f70313',
-		'X-RapidAPI-Host': 'jikan1.p.rapidapi.com'
-	}
-};
-fetch('https://jikan1.p.rapidapi.com/top/anime/1/upcoming', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
-//
+For Top Manga/Anime Showcase:
+- https://docs.api.jikan.moe/#section/Information
 
-- https://rapidapi.com/community/api/manga-eden/
-    const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'c7bdf33b7dmshcf42308cd22add9p16fdb8jsnf56785f70313',
-		'X-RapidAPI-Host': 'community-manga-eden.p.rapidapi.com'
-	}
-};
+For Anime Search:
+- https://rapidapi.com/felixeschmittfes/api/myanimelist
 
-fetch('https://community-manga-eden.p.rapidapi.com/list/0', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
-//
-
-- https://rapidapi.com/vikhyat/api/hummingbird-v1
-
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'c7bdf33b7dmshcf42308cd22add9p16fdb8jsnf56785f70313',
-		'X-RapidAPI-Host': 'hummingbirdv1.p.rapidapi.com'
-	}
-};
-
-fetch('https://hummingbirdv1.p.rapidapi.com/anime/steins-gate', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
-//
-
-search type: Anime/Manga info - Name - author - espisodes/chapter - date realease - rate
+For Manga Search:
+- https://rapidapi.com/emrade95/api/manga-scraper-for-mangakakalot-website
 
 
-task:
-Hỷ : --  làm xong format và styling bằng bootstrap cho html và cài các id cho các mục quan trọng -- dựa trên mẫu đã vẽ (7:00pm 10/9/2022)
-Phát: làm xong phần model và làm tiếp phần controll deadline (12:00pm 10/9/2022)

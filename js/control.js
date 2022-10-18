@@ -17,15 +17,8 @@ var animeModel = new allAnime();
 var mangaModel = new allManga();
 var pageViews = new pageView();
 var searchModel = new Search();
-// api Jikan
-// const jikanApi = {
-//   method: "GET",
-//   headers: {
-//     "X-RapidAPI-Key": "c7bdf33b7dmshcf42308cd22add9p16fdb8jsnf56785f70313",
-//     "X-RapidAPI-Host": "jikan1.p.rapidapi.com",
-//   },
-// };
-//
+
+// anime search constant variable
 const anime_search_options = {
   method: "GET",
   headers: {
@@ -34,14 +27,16 @@ const anime_search_options = {
   },
 };
 
+// manga search constant variable
 const manga_search_options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": "c7bdf33b7dmshcf42308cd22add9p16fdb8jsnf56785f70313",
-    "X-RapidAPI-Host": "community-manga-eden.p.rapidapi.com",
+    "X-RapidAPI-Key": "7574f18f9bmsh34870144cdb7a1bp1b4b3cjsn22321cb8f492",
+    "X-RapidAPI-Host": "manga-scraper-for-mangakakalot-website.p.rapidapi.com",
   },
 };
 
+//Top Manga/Anime function
 async function populateSugestion(type) {
   top = await fetch(`https://api.jikan.moe/v4/top/${type}`)
     .then((response) => response.json())
@@ -109,6 +104,7 @@ function RemoveAll() {
 }
 function watchList(model) {}
 
+//anime search function
 async function AnimeSearch() {
   let search_param = document.querySelector("#title").value;
   if (search_param == "") {
@@ -124,13 +120,14 @@ async function AnimeSearch() {
   }
 }
 
+//manga search function
 async function MangaSearch() {
   let search_param = document.querySelector("#title").value;
   if (search_param == "") {
     console.log("HERRRREEEEE");
   } else {
     let search_res = await fetch(
-      "https://community-manga-eden.p.rapidapi.com/list/0",
+      `https://manga-scraper-for-mangakakalot-website.p.rapidapi.com/search?keyword=${search_param}&page=1`,
       manga_search_options
     )
       .then((response) => response.json())
