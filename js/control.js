@@ -26,11 +26,27 @@ var searchModel = new Search();
 //   },
 // };
 //
+const anime_search_options = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Key": "7574f18f9bmsh34870144cdb7a1bp1b4b3cjsn22321cb8f492",
+    "X-RapidAPI-Host": "myanimelist.p.rapidapi.com",
+  },
+};
+
+const manga_search_options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': 'c7bdf33b7dmshcf42308cd22add9p16fdb8jsnf56785f70313',
+		'X-RapidAPI-Host': 'community-manga-eden.p.rapidapi.com'
+	}
+};
+
 async function populateSugestion(type) {
   top = await fetch(`https://api.jikan.moe/v4/top/${type}`)
     .then((response) => response.json())
     .then((response) => {
-      // console.log(response['data'][0]['title']);
+      console.log(response);
       let table = document.querySelector("#suggest-table > tbody");
       table.innerHTML = "";
       for (let i = 0; i < 5; i++) {
@@ -91,5 +107,35 @@ function RemoveAll() {
   mangaModel.RemoveAll();
 }
 function watchList(model) {}
+
+async function AnimeSearch() {
+  let search_param = document.querySelector("#title").value;
+  if (search_param == "") {
+    console.log("HERRRREEEEE");
+  } else {
+    let search_res = await fetch(
+      `https://myanimelist.p.rapidapi.com/search/${search_param}/10`,
+      anime_search_options
+    )
+      .then((response) => response.json())
+      .then((response) => console.log(response))
+      .catch((err) => console.error(err));
+  }
+}
+
+async function MangaSearch(){
+  let search_param = document.querySelector("#title").value;
+  if (search_param == "") {
+    console.log("HERRRREEEEE");
+  } else {
+    let search_res = await fetch(
+      'https://community-manga-eden.p.rapidapi.com/list/0',
+      manga_search_options
+    )
+      .then((response) => response.json())
+      .then((response) => console.log(response))
+      .catch((err) => console.error(err));
+  }
+}
 
 window.onload = function () {};
