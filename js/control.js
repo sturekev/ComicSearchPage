@@ -35,17 +35,32 @@ async function populateSugestion(type) {
       table.innerHTML = "";
       for (let i = 0; i < 5; i++) {
         let titl = response["data"][i]["title"];
+		let youtubeUrl = response["data"][i]["trailer"]["url"];
+		console.log(youtubeUrl);
         let row = document.createElement("tr");
         let title_number = document.createElement("td");
         title_number.innerHTML = `<b>${(i + 1).toString()}</b>`;
+
         let title_data = document.createElement("td");
         title_data.innerHTML = titl.toString();
+		let trailer_Url = document.createElement('td');
+		if (youtubeUrl){
+			let link = document.createElement('a');
+			link.setAttribute('href',`${youtubeUrl}`)
+			link.innerText = "Trailer";
+			trailer_Url.appendChild(link);
+		}
+		else{trailer_Url.innerText = "N/A";}
+				
+		
         row.appendChild(title_number);
         row.appendChild(title_data);
+		row.appendChild(trailer_Url);
         table.appendChild(row);
       }
     })
     .catch((err) => console.error(err));
+	console.log(top);
 }
 
 function saveWatchList() {
