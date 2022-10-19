@@ -2,8 +2,8 @@
 const anime_search_options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": "7574f18f9bmsh34870144cdb7a1bp1b4b3cjsn22321cb8f492",
-    "X-RapidAPI-Host": "myanimelist.p.rapidapi.com",
+    'X-RapidAPI-Key': 'c7bdf33b7dmshcf42308cd22add9p16fdb8jsnf56785f70313',
+    'X-RapidAPI-Host': 'myanimelist.p.rapidapi.com'
   },
 };
 
@@ -53,16 +53,17 @@ async function populateSugestion(type) {
         }
         row.appendChild(trailer_Url);
 
-        let moreInfoTd = document.createElement("td");
-        let moreInfo = document.createElement("button");
+        let btn = document.createElement("td");
+        let moreInfo = document.createElement("input");
         moreInfo.setAttribute("type", "button");
+        moreInfo.setAttribute("value", "more Info");
         moreInfo.setAttribute(
           "onclick",
           `callSearch('${type}','${titl.toString()}')`
         );
-        moreInfo.innerText = "More info";
-        moreInfoTd.appendChild(moreInfo);
-        row.appendChild(moreInfoTd);
+        moreInfo.setAttribute("class", "d-flex justify-content-end");
+        btn.appendChild(moreInfo);
+        row.appendChild(btn)
 
         table.appendChild(row);
       }
@@ -171,9 +172,15 @@ function populateAnimeSearch(data) {
     title.innerText = info["title"];
     row.appendChild(title);
 
+    // type
     let type = document.createElement("td");
     type.innerText = "anime";
     row.appendChild(type);
+
+    //description
+    let description = document.createElement("td");
+    description.innerText = info["description"];
+    row.appendChild(description);
 
     // anime link
     let moreInfo = document.createElement("td");
