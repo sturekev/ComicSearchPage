@@ -110,18 +110,16 @@ function populateAnimeSearch(data){
   
   for (info of data){
     let row = document.createElement('tr');
-    row.setAttribute('class','row');
 
     //index
     let idx = document.createElement('td');
-    idx.setAttribute('class', 'col');
+    // idx.setAttribute('scope', 'row');
     let curColId  = document.querySelectorAll("#searchRes > tr").length;
     idx.innerText = curColId.toString();
     row.appendChild(idx);
 
     //thumbnail
     let imgTd = document.createElement('td');
-    imgTd.setAttribute('class', 'col');
     let img = document.createElement('img');
     img.setAttribute('src',`${info['picture_url']}`);
     imgTd.appendChild(img);
@@ -129,13 +127,11 @@ function populateAnimeSearch(data){
 
     //title
     let title = document.createElement("td");
-    title.setAttribute('class', 'col');
     title.innerText = info['title'];
     row.appendChild(title);
 
     // anime link
     let moreInfo = document.createElement("td");
-    moreInfo.setAttribute('class', 'col');
     let link = document.createElement("a");
     link.setAttribute("href", `${info['myanimelist_url']}`);
     link.innerText = "More Info";
@@ -144,7 +140,6 @@ function populateAnimeSearch(data){
 
     //add to watch list
     let btn = document.createElement('td');
-    btn.setAttribute('class', 'col');
     let saveToWatchList = document.createElement('button');
     saveToWatchList.setAttribute('onclick','saveToWatchList(this)');
     saveToWatchList.innerText = 'add';
@@ -184,24 +179,22 @@ async function AnimeSearch(search_param) {
 // title: "Berserk"
 // url: "https://readmanganato.com/manga-ma952557"
 // views_count: 73303472
-function populateMangaSearch(){
+function populateMangaSearch(data){
   let generalRes = document.querySelector('#searchRes');
   generalRes.innerText ='';
   
   for (info of data){
     let row = document.createElement('tr');
-    row.setAttribute('class','row');
 
     //index
-    let idx = document.createElement('td');
-    idx.setAttribute('class', 'col');
+    let idx = document.createElement('th');
+    idx.setAttribute('scope', 'row');
     let curColId  = document.querySelectorAll("#searchRes > tr").length;
     idx.innerText = curColId.toString();
     row.appendChild(idx);
 
     //thumbnail
     let imgTd = document.createElement('td');
-    imgTd.setAttribute('class', 'col');
     let img = document.createElement('img');
     img.setAttribute('src',`${info['thumbnail_url']}`);
     imgTd.appendChild(img);
@@ -209,31 +202,26 @@ function populateMangaSearch(){
 
     //title
     let title = document.createElement("td");
-    title.setAttribute('class', 'col');
     title.innerText = info['title'];
     row.appendChild(title);
 
     //chapters
     let chapter = document.createElement("td");
-    chapter.setAttribute('class', 'col');
     chapter.innerText = info['latest_chapter'] + ' chapters';
     row.appendChild(chapter);
 
     // latest updated
     let updated = document.createElement("td");
-    updated.setAttribute('class', 'col');
     updated.innerText = 'updated by ' + info['last_updated'];
     row.appendChild(updated);
 
     // views count
     let views = document.createElement("td");
-    views.setAttribute('class', 'col');
     views.innerText = info['views_count'] + ' views';
     row.appendChild(views);
 
     //manga link
     let moreInfo = document.createElement("td");
-    moreInfo.setAttribute('class', 'col');
     let link = document.createElement("a");
     link.setAttribute("href", `${info['url']}`);
     link.innerText = "More Info";
@@ -242,7 +230,6 @@ function populateMangaSearch(){
 
     // add to watch list
     let btn = document.createElement('td');
-    btn.setAttribute('class', 'col');
     let saveToWatchList = document.createElement('button');
     saveToWatchList.setAttribute('onclick','saveToWatchList(this)');
     saveToWatchList.innerText = 'add';
@@ -265,7 +252,7 @@ async function MangaSearch(search_param) {
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
-        populateAnimeSearch(response['data']);
+        populateMangaSearch(response['data']);
       })
       .catch((err) => console.error(err));
   }
@@ -292,5 +279,4 @@ function saveWatchList() {
 //   animeModel.RemoveAll();
 //   mangaModel.RemoveAll();
 // }
-// function watchList(model) {}
 window.onload = function () {};
