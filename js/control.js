@@ -58,7 +58,7 @@ async function populateSugestion(type) {
         let moreInfoTd = document.createElement('td');
         let moreInfo = document.createElement('button');
         moreInfo.setAttribute('type','button');
-        moreInfo.setAttribute('onclick',`callSearch(${type},${titl.toString()})`);
+        moreInfo.setAttribute('onclick',`callSearch('${type}','${titl.toString()}')`);
         moreInfo.innerText = 'More info';
         moreInfoTd.appendChild(moreInfo);
         row.appendChild(moreInfoTd);
@@ -78,7 +78,7 @@ function callSearch(type, parram) {
       AnimeSearch(search_param);
     }
   }
-  else if (type =='manga  ') {
+  else if (type =='manga') {
     if (parram){
       MangaSearch(parram);
     }else {
@@ -88,18 +88,17 @@ function callSearch(type, parram) {
   }
 }
 
-//anime search function
-// description: 
-// "It has been two and a half years since Naruto Uzumaki left Konohagakure, the Hidden Leaf Village, for intense training following events which fueled his desire to be stronger. Now Akatsuki, the myster...read more."
-// myanimelist_id:
-// 1735
-// myanimelist_url:
-// "https://myanimelist.net/anime/1735/Naruto__Shippuuden"
-// picture_url:
-// "https://cdn.myanimelist.net/r/50x70/images/anime/1565/111305.jpg?s=a92272fe7a37f1c114011b406d5390c8"
-// title:
-// "Naruto: Shippuuden"
+//anime search function -- data sample
+// description: "It has been two and a half years since Naruto Uzumaki left Konohagakure, the Hidden Leaf Village, for intense training following events which fueled his desire to be stronger. Now Akatsuki, the myster...read more."
+// myanimelist_id: 1735
+// myanimelist_url:"https://myanimelist.net/anime/1735/Naruto__Shippuuden"
+// picture_url: "https://cdn.myanimelist.net/r/50x70/images/anime/1565/111305.jpg?s=a92272fe7a37f1c114011b406d5390c8"
+// title: "Naruto: Shippuuden"
 function saveToWatchList(params) {
+  console.log(params);
+  let closetTr = params.closest("tr");
+  let title = querySelector(closetTr[2]).value;
+  console.log(title);
   
 }
 function watchList(params) {
@@ -111,33 +110,43 @@ function populateAnimeSearch(data){
   
   for (info of data){
     let row = document.createElement('tr');
+    row.setAttribute('class','row');
 
+    //index
     let idx = document.createElement('td');
-    let curColId  = document.querySelectorAll("#searchRes").length;
+    idx.setAttribute('class', 'col');
+    let curColId  = document.querySelectorAll("#searchRes > tr").length;
     idx.innerText = curColId.toString();
     row.appendChild(idx);
 
+    //thumbnail
     let imgTd = document.createElement('td');
+    imgTd.setAttribute('class', 'col');
     let img = document.createElement('img');
-    img.setAttribute('src',`info['picture_url']`);
-    // img.setAttribute('class', 'img-thumbnail');
+    img.setAttribute('src',`${info['picture_url']}`);
     imgTd.appendChild(img);
     row.appendChild(imgTd);
 
+    //title
     let title = document.createElement("td");
+    title.setAttribute('class', 'col');
     title.innerText = info['title'];
     row.appendChild(title);
 
+    // anime link
     let moreInfo = document.createElement("td");
+    moreInfo.setAttribute('class', 'col');
     let link = document.createElement("a");
     link.setAttribute("href", `${info['myanimelist_url']}`);
     link.innerText = "More Info";
     moreInfo.appendChild(link);
     row.appendChild(moreInfo);
 
+    //add to watch list
     let btn = document.createElement('td');
-    let saveToWatchList = document.createElement('btn');
-    saveToWatchList.setAttribute('onclick',saveToWatchList(this));
+    btn.setAttribute('class', 'col');
+    let saveToWatchList = document.createElement('button');
+    saveToWatchList.setAttribute('onclick','saveToWatchList(this)');
     saveToWatchList.innerText = 'add';
     btn.appendChild(saveToWatchList);
     row.appendChild(btn);
@@ -157,19 +166,95 @@ async function AnimeSearch(search_param) {
       anime_search_options
     )
       .then((response) => response.json())
-      .then((response) => {console.log(response);
-        // xử lý thông tin //
-        // for (let index = 0; index <=  Object.keys(response).length; index++){
-        // }
-
+      .then((response) => {
+        console.log(response);
+        populateAnimeSearch(response);
       })
       .catch((err) => console.error(err));
   }
 }
+// manga search function -- data sample
+// authors: ['Miura Kentaro']
+// id: "manga-ma952557"
+// last_updated: "Oct-13-2022 08:40"
+// latest_chapter: 370
+//latest_chapter_title: "Chapter 370"
+// latest_chapter_url: "https://readmanganato.com/manga-ma952557/chapter-370"
+// thumbnail_url: "https://avt.mkklcdnv6temp.com/43/o/1-1583465423.jpg"
+// title: "Berserk"
+// url: "https://readmanganato.com/manga-ma952557"
+// views_count: 73303472
+function populateMangaSearch(){
+  let generalRes = document.querySelector('#searchRes');
+  generalRes.innerText ='';
+  
+  for (info of data){
+    let row = document.createElement('tr');
+    row.setAttribute('class','row');
 
-function populateMangaSearch(){}
+    //index
+    let idx = document.createElement('td');
+    idx.setAttribute('class', 'col');
+    let curColId  = document.querySelectorAll("#searchRes > tr").length;
+    idx.innerText = curColId.toString();
+    row.appendChild(idx);
+
+    //thumbnail
+    let imgTd = document.createElement('td');
+    imgTd.setAttribute('class', 'col');
+    let img = document.createElement('img');
+    img.setAttribute('src',`${info['thumbnail_url']}`);
+    imgTd.appendChild(img);
+    row.appendChild(imgTd);
+
+    //title
+    let title = document.createElement("td");
+    title.setAttribute('class', 'col');
+    title.innerText = info['title'];
+    row.appendChild(title);
+
+    //chapters
+    let chapter = document.createElement("td");
+    chapter.setAttribute('class', 'col');
+    chapter.innerText = info['latest_chapter'] + ' chapters';
+    row.appendChild(chapter);
+
+    // latest updated
+    let updated = document.createElement("td");
+    updated.setAttribute('class', 'col');
+    updated.innerText = 'updated by ' + info['last_updated'];
+    row.appendChild(updated);
+
+    // views count
+    let views = document.createElement("td");
+    views.setAttribute('class', 'col');
+    views.innerText = info['views_count'] + ' views';
+    row.appendChild(views);
+
+    //manga link
+    let moreInfo = document.createElement("td");
+    moreInfo.setAttribute('class', 'col');
+    let link = document.createElement("a");
+    link.setAttribute("href", `${info['url']}`);
+    link.innerText = "More Info";
+    moreInfo.appendChild(link);
+    row.appendChild(moreInfo);
+
+    // add to watch list
+    let btn = document.createElement('td');
+    btn.setAttribute('class', 'col');
+    let saveToWatchList = document.createElement('button');
+    saveToWatchList.setAttribute('onclick','saveToWatchList(this)');
+    saveToWatchList.innerText = 'add';
+    btn.appendChild(saveToWatchList);
+    row.appendChild(btn);
+
+    generalRes.appendChild(row);
+  }
+}
 //manga search function
 async function MangaSearch(search_param) {
+  console.log(search_param);
   if (search_param == "") {
     console.log("HERRRREEEEE");
   } else {
@@ -178,7 +263,10 @@ async function MangaSearch(search_param) {
       manga_search_options
     )
       .then((response) => response.json())
-      .then((response) => console.log(response))
+      .then((response) => {
+        console.log(response);
+        populateAnimeSearch(response['data']);
+      })
       .catch((err) => console.error(err));
   }
 }
