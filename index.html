@@ -78,14 +78,14 @@
             <input
               type="button"
               id="AnimeSearch"
-              onclick="AnimeSearch('anime')"
+              onclick="callSearch('anime')"
               value="Search Anime"
               class="d-flex justify-content-start"
             />
             <input
               type="button"
               id="MangaSearch"
-              onclick="MangaSearch('manga')"
+              onclick="callSearch('manga')"
               value="Search Manga"
               class="d-flex justify-content-end"
             />
@@ -107,6 +107,12 @@
     </div>
     <!-- RESULT TABLE -->
     <div id="result">
+      <table>
+        <thead>
+          <th class="col"> Search result</th>
+        </thead>
+        <tbody id="searchRes"></tbody>
+      </table>
     </div>
     <!-- MODAL -->
     <div class="modal fade" id="myModal" role="dialog">

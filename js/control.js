@@ -1,18 +1,4 @@
-// api -- https://rapidapi.com/jboy538antoni/api/animi/
-// 'X-RapidAPI-Key': 'c7bdf33b7dmshcf42308cd22add9p16fdb8jsnf56785f70313',
-// 'X-RapidAPI-Host': 'animi.p.rapidapi.com'
 
-//api -- https://rapidapi.com/dan42/api/anime-news-network-encyclopedia/
-// 'X-RapidAPI-Key': 'c7bdf33b7dmshcf42308cd22add9p16fdb8jsnf56785f70313',
-// 'X-RapidAPI-Host': 'animenewsnetwork.p.rapidapi.com'
-
-//api -- https://rapidapi.com/theapiguy/api/jikan1/
-// 'X-RapidAPI-Key': 'c7bdf33b7dmshcf42308cd22add9p16fdb8jsnf56785f70313',
-// 'X-RapidAPI-Host': 'jikan1.p.rapidapi.com'
-//
-//populate the info and choice for
-
-// call model
 // anime search constant variable
 const anime_search_options = {
   method: "GET",
@@ -30,7 +16,8 @@ const manga_search_options = {
     "X-RapidAPI-Host": "manga-scraper-for-mangakakalot-website.p.rapidapi.com",
   },
 };
-
+var animeWatchList = [];
+var mangaWatchList = [];
 //Top Manga/Anime function
 async function populateSugestion(type) {
   top = await fetch(`https://api.jikan.moe/v4/top/${type}`)
@@ -75,7 +62,7 @@ async function populateSugestion(type) {
         moreInfo.innerText = 'More info';
         moreInfoTd.appendChild(moreInfo);
         row.appendChild(moreInfoTd);
-        
+
         table.appendChild(row);
       }
     })
@@ -91,7 +78,7 @@ function callSearch(type, parram) {
       AnimeSearch(search_param);
     }
   }
-  else {
+  else if (type =='manga  ') {
     if (parram){
       MangaSearch(parram);
     }else {
@@ -102,6 +89,63 @@ function callSearch(type, parram) {
 }
 
 //anime search function
+// description: 
+// "It has been two and a half years since Naruto Uzumaki left Konohagakure, the Hidden Leaf Village, for intense training following events which fueled his desire to be stronger. Now Akatsuki, the myster...read more."
+// myanimelist_id:
+// 1735
+// myanimelist_url:
+// "https://myanimelist.net/anime/1735/Naruto__Shippuuden"
+// picture_url:
+// "https://cdn.myanimelist.net/r/50x70/images/anime/1565/111305.jpg?s=a92272fe7a37f1c114011b406d5390c8"
+// title:
+// "Naruto: Shippuuden"
+function saveToWatchList(params) {
+  
+}
+function watchList(params) {
+  
+}
+function populateAnimeSearch(data){
+  let generalRes = document.querySelector('#searchRes');
+  generalRes.innerText ='';
+  
+  for (info of data){
+    let row = document.createElement('tr');
+
+    let idx = document.createElement('td');
+    let curColId  = document.querySelectorAll("#searchRes").length;
+    idx.innerText = curColId.toString();
+    row.appendChild(idx);
+
+    let imgTd = document.createElement('td');
+    let img = document.createElement('img');
+    img.setAttribute('src',`info['picture_url']`);
+    // img.setAttribute('class', 'img-thumbnail');
+    imgTd.appendChild(img);
+    row.appendChild(imgTd);
+
+    let title = document.createElement("td");
+    title.innerText = info['title'];
+    row.appendChild(title);
+
+    let moreInfo = document.createElement("td");
+    let link = document.createElement("a");
+    link.setAttribute("href", `${info['myanimelist_url']}`);
+    link.innerText = "More Info";
+    moreInfo.appendChild(link);
+    row.appendChild(moreInfo);
+
+    let btn = document.createElement('td');
+    let saveToWatchList = document.createElement('btn');
+    saveToWatchList.setAttribute('onclick',saveToWatchList(this));
+    saveToWatchList.innerText = 'add';
+    btn.appendChild(saveToWatchList);
+    row.appendChild(btn);
+
+    generalRes.appendChild(row);
+  }
+}
+
 async function AnimeSearch(search_param) {
   
   console.log(search_param);
@@ -113,16 +157,17 @@ async function AnimeSearch(search_param) {
       anime_search_options
     )
       .then((response) => response.json())
-      .then((response) => {
+      .then((response) => {console.log(response);
         // xử lý thông tin //
-        for (let index = 0; index <=  Object.keys(response).length; index++){
-        }
+        // for (let index = 0; index <=  Object.keys(response).length; index++){
+        // }
 
       })
       .catch((err) => console.error(err));
   }
 }
 
+function populateMangaSearch(){}
 //manga search function
 async function MangaSearch(search_param) {
   if (search_param == "") {
@@ -138,8 +183,10 @@ async function MangaSearch(search_param) {
   }
 }
 
-// function saveWatchList() {
-// }
+function saveWatchList() {
+  localStorage.setItem("local_MangaWatchList", JSON.stringify(mangaWatchList));
+  localStorage.setItem("local_AnimeWatchList", JSON.stringify(animeWatchList));
+}
 // var deletePlayerIdList = [];
 // function clearWatchList() {
 //   let cbList = document.querySelectorAll(
