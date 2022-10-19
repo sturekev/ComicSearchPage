@@ -119,7 +119,7 @@ function loadWatchList() {
     let remove = document.createElement("input");
     remove.setAttribute("type", "button");
     remove.setAttribute("value", "remove");
-    remove.setAttribute("onclick", `removeRow(this,${(tup[0], tup[1])})`);
+    remove.setAttribute("onclick", `removeRow(this,"${(tup[0], tup[1])}")`);
     remove.setAttribute("class", "d-flex justify-content-end");
     row.appendChild(remove);
 
