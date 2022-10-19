@@ -16,8 +16,7 @@ const manga_search_options = {
     "X-RapidAPI-Host": "manga-scraper-for-mangakakalot-website.p.rapidapi.com",
   },
 };
-var animeWatchList = [];
-var mangaWatchList = [];
+var WatchList = new Set();
 //Top Manga/Anime function
 async function populateSugestion(type) {
   top = await fetch(`https://api.jikan.moe/v4/top/${type}`)
@@ -94,15 +93,56 @@ function callSearch(type, parram) {
 // myanimelist_url:"https://myanimelist.net/anime/1735/Naruto__Shippuuden"
 // picture_url: "https://cdn.myanimelist.net/r/50x70/images/anime/1565/111305.jpg?s=a92272fe7a37f1c114011b406d5390c8"
 // title: "Naruto: Shippuuden"
-function saveToWatchList(params) {
-  console.log(params);
-  let closetTr = params.closest("tr");
-  let title = querySelector(closetTr[2]).value;
+function saveToWatchList(title,type) {
   console.log(title);
-  
+  console.log(type);
+  WatchList.add([title,type]);
+  WatchList.delete()
 }
-function watchList(params) {
-  
+function loadWatchList() {
+  let table = document.querySelector('#watchList');
+  for (tup of WatchList){
+    let row = document.createElement("tr");
+
+    let title = document.createElement("td");
+    title.setAttribute('scope', 'col')
+    console.log(tup);
+    console.log(top[0]);
+    title.innerText = tup[0];
+    row.appendChild(title);
+
+    let type = document.createElement("td");
+    type.innerText = tup[1];
+    row.appendChild(type);
+
+    let remove = document.createElement('input');
+    remove.setAttribute('type', 'button');
+    remove.setAttribute('value', 'remove')
+    remove.setAttribute('onclick',`removeRow(this,${(tup[0],tup[1])})`);
+    remove.setAttribute('class', 'd-flex justify-content-end');
+    row.appendChild(remove);
+
+    table.appendChild(row);
+  }  
+}
+
+function removeRow(element,tuple) {
+  // TODO: Implement this function
+  let closetTr = element.closest("tr");
+  closetTr.parentElement.removeChild(closetTr);
+  WatchList.delete(tuple);
+  localStorage.setItem("local_WatchList", JSON.stringify(WatchList));
+}
+
+function saveWatchList() {
+  localStorage.setItem("local_WatchList", JSON.stringify(WatchList));
+}
+
+function removeAll(){
+  WatchList.clear();
+  localStorage.setItem("local_WatchList", JSON.stringify(WatchList));
+  let watchList = document.querySelector('#watchList');
+  watchList.innerText = '';
 }
 function populateAnimeSearch(data){
   let generalRes = document.querySelector('#searchRes');
@@ -130,6 +170,10 @@ function populateAnimeSearch(data){
     title.innerText = info['title'];
     row.appendChild(title);
 
+    let type = document.createElement("td");
+    type.innerText = 'anime';
+    row.appendChild(type);
+
     // anime link
     let moreInfo = document.createElement("td");
     let link = document.createElement("a");
@@ -138,11 +182,15 @@ function populateAnimeSearch(data){
     moreInfo.appendChild(link);
     row.appendChild(moreInfo);
 
+    
+
     //add to watch list
     let btn = document.createElement('td');
-    let saveToWatchList = document.createElement('button');
-    saveToWatchList.setAttribute('onclick','saveToWatchList(this)');
-    saveToWatchList.innerText = 'add';
+    let saveToWatchList = document.createElement('input');
+    saveToWatchList.setAttribute('type', 'button');
+    saveToWatchList.setAttribute('value', 'add to watchList')
+    saveToWatchList.setAttribute('onclick',`saveToWatchList('${info['title']}','anime')`);
+    saveToWatchList.setAttribute('class', 'd-flex justify-content-end');
     btn.appendChild(saveToWatchList);
     row.appendChild(btn);
 
@@ -205,6 +253,10 @@ function populateMangaSearch(data){
     title.innerText = info['title'];
     row.appendChild(title);
 
+    let type = document.createElement("td");
+    type.innerText = 'manga';
+    row.appendChild(type);
+
     //chapters
     let chapter = document.createElement("td");
     chapter.innerText = info['latest_chapter'] + ' chapters';
@@ -230,9 +282,11 @@ function populateMangaSearch(data){
 
     // add to watch list
     let btn = document.createElement('td');
-    let saveToWatchList = document.createElement('button');
+    let saveToWatchList = document.createElement('input');
+    saveToWatchList.setAttribute('type', 'button');
+    saveToWatchList.setAttribute('value', 'add to watchList')
     saveToWatchList.setAttribute('onclick','saveToWatchList(this)');
-    saveToWatchList.innerText = 'add';
+    saveToWatchList.setAttribute('class', 'd-flex justify-content-end');
     btn.appendChild(saveToWatchList);
     row.appendChild(btn);
 
@@ -258,25 +312,5 @@ async function MangaSearch(search_param) {
   }
 }
 
-function saveWatchList() {
-  localStorage.setItem("local_MangaWatchList", JSON.stringify(mangaWatchList));
-  localStorage.setItem("local_AnimeWatchList", JSON.stringify(animeWatchList));
-}
-// var deletePlayerIdList = [];
-// function clearWatchList() {
-//   let cbList = document.querySelectorAll(
-//     "#watch-table > tbody > tr > td > input[type = 'checkbox']"
-//   );
-//   for (let checkbox of cbList) {
-//     if (checkbox.checked) {
-//       deletePlayerIdList.push(parseInt(checkbox.closest("tr")["id"]));
-//     }
-//   }
-//   searchModel.removeSearch(deletePlayerIdList);
-// }
 
-// function RemoveAll() {
-//   animeModel.RemoveAll();
-//   mangaModel.RemoveAll();
-// }
 window.onload = function () {};
