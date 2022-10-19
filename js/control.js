@@ -15,7 +15,7 @@ const manga_search_options = {
     "X-RapidAPI-Host": "manga-scraper-for-mangakakalot-website.p.rapidapi.com",
   },
 };
-var WatchList = new Set();
+var WatchList = [];
 //Top Manga/Anime function
 async function populateSugestion(type) {
   top = await fetch(`https://api.jikan.moe/v4/top/${type}`)
@@ -98,54 +98,60 @@ function callSearch(type, parram) {
 function saveToWatchList(title, type) {
   console.log(title);
   console.log(type);
-  WatchList.add([title, type]);
-  WatchList.delete();
+  WatchList.push({title: title,type: type});
 }
 function loadWatchList() {
+  let localWatchList = localStorage.getItem('local_WatchList');
+  WatchList = localWatchList ? JSON.parse(localWatchList) : [];
+  WatchList.sort();
   let table = document.querySelector("#watchList");
-  for (tup of WatchList) {
+  table.innerText = '';
+  for (let index = 0; index < WatchList.length; index ++) {
     let row = document.createElement("tr");
 
     let title = document.createElement("td");
     title.setAttribute("scope", "col");
-    console.log(tup);
-    console.log(top[0]);
-    title.innerText = tup[0];
+    title.innerText = WatchList[index]['title'];
     row.appendChild(title);
 
     let type = document.createElement("td");
-    type.innerText = tup[1];
+    type.innerText = WatchList[index]['type'];
     row.appendChild(type);
 
+    let removeTd = document.createElement("td");
     let remove = document.createElement("input");
     remove.setAttribute("type", "button");
     remove.setAttribute("value", "remove");
-    remove.setAttribute("onclick", `removeRow(this,"${(tup[0], tup[1])}")`);
+    remove.setAttribute(
+      "onclick", 
+      `removeRow(this,"${index}")`);
     remove.setAttribute("class", "d-flex justify-content-end");
-    row.appendChild(remove);
+    removeTd.appendChild(remove);
+    row.appendChild(removeTd);
 
     table.appendChild(row);
   }
 }
 
-function removeRow(element, tuple) {
+function removeRow(element, index) {
   // TODO: Implement this function
   let closetTr = element.closest("tr");
   closetTr.parentElement.removeChild(closetTr);
-  WatchList.delete(tuple);
-  localStorage.setItem("local_WatchList", JSON.stringify(WatchList));
+
+  let localWatchList = localStorage.getItem('local_WatchList');
+  WatchList = localWatchList ? JSON.parse(localWatchList) : [];
+  let cur = WatchList[index];
+  WatchList[index] = WatchList[WatchList.length - 1];
+  WatchList.pop();
+  WatchList.sort();
 }
 
 function saveWatchList() {
+  console.log(WatchList);
+  console.log(JSON.stringify(WatchList));
   localStorage.setItem("local_WatchList", JSON.stringify(WatchList));
 }
 
-function removeAll() {
-  WatchList.clear();
-  localStorage.setItem("local_WatchList", JSON.stringify(WatchList));
-  let watchList = document.querySelector("#watchList");
-  watchList.innerText = "";
-}
 function populateAnimeSearch(data) {
   let generalRes = document.querySelector("#searchRes");
   generalRes.innerText = "";
@@ -198,7 +204,7 @@ function populateAnimeSearch(data) {
     saveToWatchList.setAttribute("value", "add to watchList");
     saveToWatchList.setAttribute(
       "onclick",
-      `saveToWatchList('${info["title"]}','anime')`
+      `saveToWatchList('${info["title"].toString()}','anime')`
     );
     saveToWatchList.setAttribute("class", "d-flex justify-content-end");
     btn.appendChild(saveToWatchList);
@@ -297,7 +303,7 @@ function populateMangaSearch(data) {
     saveToWatchList.setAttribute("value", "add to watchList");
     saveToWatchList.setAttribute(
       "onclick",
-      `saveToWatchList(${info["title"]},"manga")`
+      `saveToWatchList(${info["title"].toString()},"manga")`
     );
     saveToWatchList.setAttribute("class", "d-flex justify-content-end");
     btn.appendChild(saveToWatchList);
