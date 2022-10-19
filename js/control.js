@@ -1,4 +1,3 @@
-
 // anime search constant variable
 const anime_search_options = {
   method: "GET",
@@ -54,11 +53,14 @@ async function populateSugestion(type) {
         }
         row.appendChild(trailer_Url);
 
-        let moreInfoTd = document.createElement('td');
-        let moreInfo = document.createElement('button');
-        moreInfo.setAttribute('type','button');
-        moreInfo.setAttribute('onclick',`callSearch('${type}','${titl.toString()}')`);
-        moreInfo.innerText = 'More info';
+        let moreInfoTd = document.createElement("td");
+        let moreInfo = document.createElement("button");
+        moreInfo.setAttribute("type", "button");
+        moreInfo.setAttribute(
+          "onclick",
+          `callSearch('${type}','${titl.toString()}')`
+        );
+        moreInfo.innerText = "More info";
         moreInfoTd.appendChild(moreInfo);
         row.appendChild(moreInfoTd);
 
@@ -69,18 +71,17 @@ async function populateSugestion(type) {
 }
 
 function callSearch(type, parram) {
-  if (type == 'anime'){
-    if (parram){
+  if (type == "anime") {
+    if (parram) {
       AnimeSearch(parram);
-    }else {
+    } else {
       let search_param = document.querySelector("#title").value;
       AnimeSearch(search_param);
     }
-  }
-  else if (type =='manga') {
-    if (parram){
+  } else if (type == "manga") {
+    if (parram) {
       MangaSearch(parram);
-    }else {
+    } else {
       let search_param = document.querySelector("#title").value;
       MangaSearch(search_param);
     }
@@ -93,19 +94,19 @@ function callSearch(type, parram) {
 // myanimelist_url:"https://myanimelist.net/anime/1735/Naruto__Shippuuden"
 // picture_url: "https://cdn.myanimelist.net/r/50x70/images/anime/1565/111305.jpg?s=a92272fe7a37f1c114011b406d5390c8"
 // title: "Naruto: Shippuuden"
-function saveToWatchList(title,type) {
+function saveToWatchList(title, type) {
   console.log(title);
   console.log(type);
-  WatchList.add([title,type]);
-  WatchList.delete()
+  WatchList.add([title, type]);
+  WatchList.delete();
 }
 function loadWatchList() {
-  let table = document.querySelector('#watchList');
-  for (tup of WatchList){
+  let table = document.querySelector("#watchList");
+  for (tup of WatchList) {
     let row = document.createElement("tr");
 
     let title = document.createElement("td");
-    title.setAttribute('scope', 'col')
+    title.setAttribute("scope", "col");
     console.log(tup);
     console.log(top[0]);
     title.innerText = tup[0];
@@ -115,18 +116,18 @@ function loadWatchList() {
     type.innerText = tup[1];
     row.appendChild(type);
 
-    let remove = document.createElement('input');
-    remove.setAttribute('type', 'button');
-    remove.setAttribute('value', 'remove')
-    remove.setAttribute('onclick',`removeRow(this,${(tup[0],tup[1])})`);
-    remove.setAttribute('class', 'd-flex justify-content-end');
+    let remove = document.createElement("input");
+    remove.setAttribute("type", "button");
+    remove.setAttribute("value", "remove");
+    remove.setAttribute("onclick", `removeRow(this,${(tup[0], tup[1])})`);
+    remove.setAttribute("class", "d-flex justify-content-end");
     row.appendChild(remove);
 
     table.appendChild(row);
-  }  
+  }
 }
 
-function removeRow(element,tuple) {
+function removeRow(element, tuple) {
   // TODO: Implement this function
   let closetTr = element.closest("tr");
   closetTr.parentElement.removeChild(closetTr);
@@ -138,59 +139,61 @@ function saveWatchList() {
   localStorage.setItem("local_WatchList", JSON.stringify(WatchList));
 }
 
-function removeAll(){
+function removeAll() {
   WatchList.clear();
   localStorage.setItem("local_WatchList", JSON.stringify(WatchList));
-  let watchList = document.querySelector('#watchList');
-  watchList.innerText = '';
+  let watchList = document.querySelector("#watchList");
+  watchList.innerText = "";
 }
-function populateAnimeSearch(data){
-  let generalRes = document.querySelector('#searchRes');
-  generalRes.innerText ='';
-  
-  for (info of data){
-    let row = document.createElement('tr');
+function populateAnimeSearch(data) {
+  let generalRes = document.querySelector("#searchRes");
+  generalRes.innerText = "";
+
+  for (info of data) {
+    let row = document.createElement("tr");
 
     //index
-    let idx = document.createElement('td');
+    let idx = document.createElement("td");
     // idx.setAttribute('scope', 'row');
-    let curColId  = document.querySelectorAll("#searchRes > tr").length;
+    let curColId = document.querySelectorAll("#searchRes > tr").length;
     idx.innerText = curColId.toString();
     row.appendChild(idx);
 
     //thumbnail
-    let imgTd = document.createElement('td');
-    let img = document.createElement('img');
-    img.setAttribute('src',`${info['picture_url']}`);
+    let imgTd = document.createElement("td");
+    let img = document.createElement("img");
+    img.setAttribute("src", `${info["picture_url"]}`);
     imgTd.appendChild(img);
     row.appendChild(imgTd);
 
     //title
     let title = document.createElement("td");
-    title.innerText = info['title'];
+    title.innerText = info["title"];
     row.appendChild(title);
 
     let type = document.createElement("td");
-    type.innerText = 'anime';
+    type.innerText = "anime";
     row.appendChild(type);
 
     // anime link
     let moreInfo = document.createElement("td");
     let link = document.createElement("a");
-    link.setAttribute("href", `${info['myanimelist_url']}`);
+    link.setAttribute("href", `${info["myanimelist_url"]}`);
+    link.setAttribute("target", "_blank");
     link.innerText = "More Info";
     moreInfo.appendChild(link);
     row.appendChild(moreInfo);
 
-    
-
     //add to watch list
-    let btn = document.createElement('td');
-    let saveToWatchList = document.createElement('input');
-    saveToWatchList.setAttribute('type', 'button');
-    saveToWatchList.setAttribute('value', 'add to watchList')
-    saveToWatchList.setAttribute('onclick',`saveToWatchList('${info['title']}','anime')`);
-    saveToWatchList.setAttribute('class', 'd-flex justify-content-end');
+    let btn = document.createElement("td");
+    let saveToWatchList = document.createElement("input");
+    saveToWatchList.setAttribute("type", "button");
+    saveToWatchList.setAttribute("value", "add to watchList");
+    saveToWatchList.setAttribute(
+      "onclick",
+      `saveToWatchList('${info["title"]}','anime')`
+    );
+    saveToWatchList.setAttribute("class", "d-flex justify-content-end");
     btn.appendChild(saveToWatchList);
     row.appendChild(btn);
 
@@ -199,7 +202,6 @@ function populateAnimeSearch(data){
 }
 
 async function AnimeSearch(search_param) {
-  
   console.log(search_param);
   if (search_param == "") {
     console.log("HERRRREEEEE");
@@ -227,66 +229,70 @@ async function AnimeSearch(search_param) {
 // title: "Berserk"
 // url: "https://readmanganato.com/manga-ma952557"
 // views_count: 73303472
-function populateMangaSearch(data){
-  let generalRes = document.querySelector('#searchRes');
-  generalRes.innerText ='';
-  
-  for (info of data){
-    let row = document.createElement('tr');
+function populateMangaSearch(data) {
+  let generalRes = document.querySelector("#searchRes");
+  generalRes.innerText = "";
+
+  for (info of data) {
+    let row = document.createElement("tr");
 
     //index
-    let idx = document.createElement('th');
-    idx.setAttribute('scope', 'row');
-    let curColId  = document.querySelectorAll("#searchRes > tr").length;
+    let idx = document.createElement("th");
+    idx.setAttribute("scope", "row");
+    let curColId = document.querySelectorAll("#searchRes > tr").length;
     idx.innerText = curColId.toString();
     row.appendChild(idx);
 
     //thumbnail
-    let imgTd = document.createElement('td');
-    let img = document.createElement('img');
-    img.setAttribute('src',`${info['thumbnail_url']}`);
+    let imgTd = document.createElement("td");
+    let img = document.createElement("img");
+    img.setAttribute("src", `${info["thumbnail_url"]}`);
     imgTd.appendChild(img);
     row.appendChild(imgTd);
 
     //title
     let title = document.createElement("td");
-    title.innerText = info['title'];
+    title.innerText = info["title"];
     row.appendChild(title);
 
     let type = document.createElement("td");
-    type.innerText = 'manga';
+    type.innerText = "manga";
     row.appendChild(type);
 
     //chapters
     let chapter = document.createElement("td");
-    chapter.innerText = info['latest_chapter'] + ' chapters';
+    chapter.innerText = info["latest_chapter"] + " chapters";
     row.appendChild(chapter);
 
     // latest updated
     let updated = document.createElement("td");
-    updated.innerText = 'updated by ' + info['last_updated'];
+    updated.innerText = "updated by " + info["last_updated"];
     row.appendChild(updated);
 
     // views count
     let views = document.createElement("td");
-    views.innerText = info['views_count'] + ' views';
+    views.innerText = info["views_count"] + " views";
     row.appendChild(views);
 
     //manga link
     let moreInfo = document.createElement("td");
     let link = document.createElement("a");
-    link.setAttribute("href", `${info['url']}`);
+    link.setAttribute("href", `${info["url"]}`);
+    link.setAttribute("target", "_blank");
     link.innerText = "More Info";
     moreInfo.appendChild(link);
     row.appendChild(moreInfo);
 
     // add to watch list
-    let btn = document.createElement('td');
-    let saveToWatchList = document.createElement('input');
-    saveToWatchList.setAttribute('type', 'button');
-    saveToWatchList.setAttribute('value', 'add to watchList')
-    saveToWatchList.setAttribute('onclick','saveToWatchList(this)');
-    saveToWatchList.setAttribute('class', 'd-flex justify-content-end');
+    let btn = document.createElement("td");
+    let saveToWatchList = document.createElement("input");
+    saveToWatchList.setAttribute("type", "button");
+    saveToWatchList.setAttribute("value", "add to watchList");
+    saveToWatchList.setAttribute(
+      "onclick",
+      `saveToWatchList(${info["title"]},"manga")`
+    );
+    saveToWatchList.setAttribute("class", "d-flex justify-content-end");
     btn.appendChild(saveToWatchList);
     row.appendChild(btn);
 
@@ -306,11 +312,10 @@ async function MangaSearch(search_param) {
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
-        populateMangaSearch(response['data']);
+        populateMangaSearch(response["data"]);
       })
       .catch((err) => console.error(err));
   }
 }
-
 
 window.onload = function () {};
