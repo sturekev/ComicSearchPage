@@ -21,7 +21,6 @@ async function populateSugestion(type) {
   top = await fetch(`https://api.jikan.moe/v4/top/${type}`)
     .then((response) => response.json())
     .then((response) => {
-      // console.log(response['data'][0]['title']);
       let table = document.querySelector("#suggest-table > tbody");
       table.innerHTML = "";
       for (let i = 0; i < 5; i++) {
@@ -96,8 +95,6 @@ function callSearch(type, parram) {
 // picture_url: "https://cdn.myanimelist.net/r/50x70/images/anime/1565/111305.jpg?s=a92272fe7a37f1c114011b406d5390c8"
 // title: "Naruto: Shippuuden"
 function saveToWatchList(title, type) {
-  console.log(title);
-  console.log(type);
   WatchList.push({title: title,type: type});
 }
 function loadWatchList() {
@@ -147,8 +144,6 @@ function removeRow(element, index) {
 }
 
 function saveWatchList() {
-  console.log(WatchList);
-  console.log(JSON.stringify(WatchList));
   localStorage.setItem("local_WatchList", JSON.stringify(WatchList));
 }
 
@@ -215,9 +210,7 @@ function populateAnimeSearch(data) {
 }
 
 async function AnimeSearch(search_param) {
-  console.log(search_param);
   if (search_param == "") {
-    console.log("HERRRREEEEE");
   } else {
     let search_res = await fetch(
       `https://myanimelist.p.rapidapi.com/search/${search_param}/10`,
@@ -225,7 +218,6 @@ async function AnimeSearch(search_param) {
     )
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
         populateAnimeSearch(response);
       })
       .catch((err) => console.error(err));
@@ -303,7 +295,7 @@ function populateMangaSearch(data) {
     saveToWatchList.setAttribute("value", "add to watchList");
     saveToWatchList.setAttribute(
       "onclick",
-      `saveToWatchList(${info["title"].toString()},"manga")`
+      `saveToWatchList("${info["title"].toString()}","manga")`
     );
     saveToWatchList.setAttribute("class", "d-flex justify-content-end");
     btn.appendChild(saveToWatchList);
@@ -314,9 +306,7 @@ function populateMangaSearch(data) {
 }
 //manga search function
 async function MangaSearch(search_param) {
-  console.log(search_param);
   if (search_param == "") {
-    console.log("HERRRREEEEE");
   } else {
     let search_res = await fetch(
       `https://manga-scraper-for-mangakakalot-website.p.rapidapi.com/search?keyword=${search_param}&page=1`,
@@ -324,7 +314,6 @@ async function MangaSearch(search_param) {
     )
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
         populateMangaSearch(response["data"]);
       })
       .catch((err) => console.error(err));
